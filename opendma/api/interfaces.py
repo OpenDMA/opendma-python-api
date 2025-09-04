@@ -1861,13 +1861,13 @@ class OdmaDocument(OdmaObject):
         pass
 
     @abstractmethod
-    def get_checked_out_by(self) -> str:
+    def get_checked_out_by(self) -> Optional[str]:
         """
         Returns the user who checked out this version of this document, null if this document is not checked out.<br>
         Shortcut for <code>get_property(PROPERTY_CHECKEDOUTBY).get_string()</code>.
         
         Property opendma:CheckedOutBy: String
-        [SingleValue] [ReadOnly] [Required]
+        [SingleValue] [ReadOnly] [Optional]
         Full description follows.
         
         :return: the user who checked out this version of this document, null if this document is not checked out
@@ -3844,12 +3844,9 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:CheckedOutAt")
 
-    def get_checked_out_by(self) -> str:
+    def get_checked_out_by(self) -> Optional[str]:
         try:
-            result = core.get_property(constants.PROPERTY_CHECKEDOUTBY).get_string()
-            if result is None:
-                raise OdmaServiceException("Predefined OpenDMA property opendma:CheckedOutBy is None")
-            return result
+            return core.get_property(constants.PROPERTY_CHECKEDOUTBY).get_string()
         except OdmaPropertyNotFoundException:
             raise OdmaServiceException("Predefined OpenDMA property missing: opendma:CheckedOutBy")
         except OdmaInvalidDataTypeException:
