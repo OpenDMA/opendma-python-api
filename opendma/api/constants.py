@@ -49,9 +49,6 @@ PROPERTY_PROPERTIES = OdmaQName("opendma", "Properties")
 # qualified name of the OpenDMA system property Aspect
 PROPERTY_ASPECT = OdmaQName("opendma", "Aspect")
 
-# qualified name of the OpenDMA system property Instantiable
-PROPERTY_INSTANTIABLE = OdmaQName("opendma", "Instantiable")
-
 # qualified name of the OpenDMA system property Hidden
 PROPERTY_HIDDEN = OdmaQName("opendma", "Hidden")
 

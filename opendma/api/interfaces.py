@@ -753,33 +753,6 @@ class OdmaClass(OdmaObject):
         pass
 
     @abstractmethod
-    def get_instantiable(self) -> bool:
-        """
-        Returns Indicates if there can ob objects of this class (true) or if this class is abstract (false).<br>
-        Shortcut for <code>get_property(PROPERTY_INSTANTIABLE).get_boolean()</code>.
-        
-        Property opendma:Instantiable: Boolean
-        [SingleValue] [Writable] [Required]
-        
-        :return: Indicates if there can ob objects of this class (true) or if this class is abstract (false)
-        """
-        pass
-
-    @abstractmethod
-    def set_instantiable(self, new_value: bool) -> None:
-        """
-        Sets Indicates if there can ob objects of this class (true) or if this class is abstract (false).<br>
-        Shortcut for <code>get_property(PROPERTY_INSTANTIABLE).set_value()</code>.
-        
-        Property opendma:Instantiable: Boolean
-        [SingleValue] [Writable] [Required]
-        
-        :param new_value: the new value for Indicates if there can ob objects of this class (true) or if this class is abstract (false)
-        :raises OdmaAccessDeniedException: Raised if this OdmaProperty is read-only or cannot be set by the current user.
-        """
-        pass
-
-    @abstractmethod
     def get_hidden(self) -> bool:
         """
         Returns Indicates if this class should be hidden from end users and probably administrators.<br>
@@ -1876,7 +1849,7 @@ class OdmaDocument(OdmaObject):
 
 class OdmaContentElement(OdmaObject):
     """
-    A ContentElement represents one atomic content element the Documents are made of. This abstract (non instantiable) base class defines the type of content and the position of this element in the sequence of all content elements.
+    A ContentElement represents one atomic content element the Documents are made of. This base class defines the type of content and the position of this element in the sequence of all content elements.
     """
 
     @abstractmethod
@@ -3174,25 +3147,6 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Aspect")
 
-    def get_instantiable(self) -> bool:
-        try:
-            result = core.get_property(constants.PROPERTY_INSTANTIABLE).get_boolean()
-            if result is None:
-                raise OdmaServiceException("Predefined OpenDMA property opendma:Instantiable is None")
-            return result
-        except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:Instantiable")
-        except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Instantiable")
-
-    def set_instantiable(self, new_value: bool) -> None:
-        try:
-            core.get_property(constants.PROPERTY_INSTANTIABLE).set_value(new_value)
-        except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:Instantiable")
-        except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Instantiable")
-
     def get_hidden(self) -> bool:
         try:
             result = core.get_property(constants.PROPERTY_HIDDEN).get_boolean()
@@ -3275,8 +3229,6 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_declared_properties": set_declared_properties,
         "get_properties": get_properties,
         "get_aspect": get_aspect,
-        "get_instantiable": get_instantiable,
-        "set_instantiable": set_instantiable,
         "get_hidden": get_hidden,
         "set_hidden": set_hidden,
         "get_system": get_system,
