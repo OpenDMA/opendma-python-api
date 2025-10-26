@@ -131,8 +131,8 @@ PROPERTY_BOOLEANVALUE = OdmaQName("opendma", "BooleanValue")
 # qualified name of the OpenDMA system property DateTimeValue
 PROPERTY_DATETIMEVALUE = OdmaQName("opendma", "DateTimeValue")
 
-# qualified name of the OpenDMA system property BlobValue
-PROPERTY_BLOBVALUE = OdmaQName("opendma", "BlobValue")
+# qualified name of the OpenDMA system property BinaryValue
+PROPERTY_BINARYVALUE = OdmaQName("opendma", "BinaryValue")
 
 # qualified name of the OpenDMA system property ReferenceValue
 PROPERTY_REFERENCEVALUE = OdmaQName("opendma", "ReferenceValue")

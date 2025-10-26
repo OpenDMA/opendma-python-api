@@ -318,9 +318,9 @@ class OdmaProperty(ABC):
         pass
 
     @abstractmethod
-    def get_blob(self) -> Optional[bytes]:
-        """ Retrieves the Blob value of this property if and only if
-        the data type of this property is a single valued Blob.
+    def get_binary(self) -> Optional[bytes]:
+        """ Retrieves the Binary value of this property if and only if
+        the data type of this property is a single valued Binary.
         """
         pass
 
@@ -419,9 +419,9 @@ class OdmaProperty(ABC):
         pass
 
     @abstractmethod
-    def get_blob_list(self) -> list[bytes]:
-        """ Retrieves the Blob value of this property if and only if
-        the data type of this property is a multi valued Blob.
+    def get_binary_list(self) -> list[bytes]:
+        """ Retrieves the Binary value of this property if and only if
+        the data type of this property is a multi valued Binary.
         """
         pass
 
@@ -1463,30 +1463,30 @@ class OdmaChoiceValue(OdmaObject):
         pass
 
     @abstractmethod
-    def get_blob_value(self) -> Optional[bytes]:
+    def get_binary_value(self) -> Optional[bytes]:
         """
-        Returns the BLOB value of this choice or null, if the property info this choice is assigned to is not of data type BLOB.<br>
-        Shortcut for <code>get_property(PROPERTY_BLOBVALUE).get_blob()</code>.
+        Returns the Binary value of this choice or null, if the property info this choice is assigned to is not of data type Binary.<br>
+        Shortcut for <code>get_property(PROPERTY_BINARYVALUE).get_binary()</code>.
         
-        Property opendma:BlobValue: Blob
+        Property opendma:BinaryValue: Binary
         [SingleValue] [Writable] [Optional]
         Full description follows.
         
-        :return: the BLOB value of this choice or null, if the property info this choice is assigned to is not of data type BLOB
+        :return: the Binary value of this choice or null, if the property info this choice is assigned to is not of data type Binary
         """
         pass
 
     @abstractmethod
-    def set_blob_value(self, new_value: Optional[bytes]) -> None:
+    def set_binary_value(self, new_value: Optional[bytes]) -> None:
         """
-        Sets the BLOB value of this choice or null, if the property info this choice is assigned to is not of data type BLOB.<br>
-        Shortcut for <code>get_property(PROPERTY_BLOBVALUE).set_value()</code>.
+        Sets the Binary value of this choice or null, if the property info this choice is assigned to is not of data type Binary.<br>
+        Shortcut for <code>get_property(PROPERTY_BINARYVALUE).set_value()</code>.
         
-        Property opendma:BlobValue: Blob
+        Property opendma:BinaryValue: Binary
         [SingleValue] [Writable] [Optional]
         Full description follows.
         
-        :param new_value: the new value for the BLOB value of this choice or null, if the property info this choice is assigned to is not of data type BLOB
+        :param new_value: the new value for the Binary value of this choice or null, if the property info this choice is assigned to is not of data type Binary
         :raises OdmaAccessDeniedException: Raised if this OdmaProperty is read-only or cannot be set by the current user.
         """
         pass
@@ -2605,11 +2605,11 @@ class OdmaPropertyImpl(OdmaProperty):
                         self._value = new_value
                     else:
                         raise OdmaInvalidDataTypeException("This property has a multi-valued DateTime data type. It can only be set to values assignable to `list[datetime]` but got "+type(new_value).__name__);
-                case OdmaType.BLOB:
+                case OdmaType.BINARY:
                     if isinstance(new_value, list) and all(isinstance(item, bytes) for item in new_value):
                         self._value = new_value
                     else:
-                        raise OdmaInvalidDataTypeException("This property has a multi-valued Blob data type. It can only be set to values assignable to `list[bytes]` but got "+type(new_value).__name__);
+                        raise OdmaInvalidDataTypeException("This property has a multi-valued Binary data type. It can only be set to values assignable to `list[bytes]` but got "+type(new_value).__name__);
                 case OdmaType.REFERENCE:
                     if isinstance(new_value, Iterable):
                         self._value = new_value
@@ -2674,11 +2674,11 @@ class OdmaPropertyImpl(OdmaProperty):
                         self._value = new_value
                     else:
                         raise OdmaInvalidDataTypeException("This property has a single-valued DateTime data type. It can only be set to values assignable to `Optional[datetime]` but got "+type(new_value).__name__);
-                case OdmaType.BLOB:
+                case OdmaType.BINARY:
                     if isinstance(new_value, bytes):
                         self._value = new_value
                     else:
-                        raise OdmaInvalidDataTypeException("This property has a single-valued Blob data type. It can only be set to values assignable to `Optional[bytes]` but got "+type(new_value).__name__);
+                        raise OdmaInvalidDataTypeException("This property has a single-valued Binary data type. It can only be set to values assignable to `Optional[bytes]` but got "+type(new_value).__name__);
                 case OdmaType.REFERENCE:
                     if isinstance(new_value, OdmaObject):
                         self._value = new_value
@@ -2775,14 +2775,14 @@ class OdmaPropertyImpl(OdmaProperty):
             return self._value  # type: ignore[return-value]
         raise OdmaInvalidDataTypeException("This property has a different data type and/or cardinality. It cannot return values with `get_datetime(self)`");
 
-    def get_blob(self) -> Optional[bytes]:
-        """ Retrieves the Blob value of this property if and only if
-        the data type of this property is a single valued Blob.
+    def get_binary(self) -> Optional[bytes]:
+        """ Retrieves the Binary value of this property if and only if
+        the data type of this property is a single valued Binary.
         """
-        if self._multi_value == False and self._data_type == OdmaType.BLOB:
+        if self._multi_value == False and self._data_type == OdmaType.BINARY:
             self._enforce_value()
             return self._value  # type: ignore[return-value]
-        raise OdmaInvalidDataTypeException("This property has a different data type and/or cardinality. It cannot return values with `get_blob(self)`");
+        raise OdmaInvalidDataTypeException("This property has a different data type and/or cardinality. It cannot return values with `get_binary(self)`");
 
     def get_reference(self) -> Optional[TOdmaObject]:
         """ Retrieves the Reference value of this property if and only if
@@ -2921,14 +2921,14 @@ class OdmaPropertyImpl(OdmaProperty):
             return self._value  # type: ignore[return-value]
         raise OdmaInvalidDataTypeException("This property has a different data type and/or cardinality. It cannot return values with `get_datetime_list(self)`");
 
-    def get_blob_list(self) -> list[bytes]:
-        """ Retrieves the Blob value of this property if and only if
-        the data type of this property is a multi valued Blob.
+    def get_binary_list(self) -> list[bytes]:
+        """ Retrieves the Binary value of this property if and only if
+        the data type of this property is a multi valued Binary.
         """
-        if self._multi_value == True and self._data_type == OdmaType.BLOB:
+        if self._multi_value == True and self._data_type == OdmaType.BINARY:
             self._enforce_value()
             return self._value  # type: ignore[return-value]
-        raise OdmaInvalidDataTypeException("This property has a different data type and/or cardinality. It cannot return values with `get_blob_list(self)`");
+        raise OdmaInvalidDataTypeException("This property has a different data type and/or cardinality. It cannot return values with `get_binary_list(self)`");
 
     def get_reference_iterable(self) -> Iterable[TOdmaObject]:
         """ Retrieves the Reference value of this property if and only if
@@ -3581,21 +3581,21 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:DateTimeValue")
 
-    def get_blob_value(self) -> Optional[bytes]:
+    def get_binary_value(self) -> Optional[bytes]:
         try:
-            return core.get_property(constants.PROPERTY_BLOBVALUE).get_blob()
+            return core.get_property(constants.PROPERTY_BINARYVALUE).get_binary()
         except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:BlobValue")
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:BinaryValue")
         except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:BlobValue")
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:BinaryValue")
 
-    def set_blob_value(self, new_value: Optional[bytes]) -> None:
+    def set_binary_value(self, new_value: Optional[bytes]) -> None:
         try:
-            core.get_property(constants.PROPERTY_BLOBVALUE).set_value(new_value)
+            core.get_property(constants.PROPERTY_BINARYVALUE).set_value(new_value)
         except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:BlobValue")
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:BinaryValue")
         except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:BlobValue")
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:BinaryValue")
 
     def get_reference_value(self) -> Optional["OdmaObject"]:
         try:
@@ -3632,8 +3632,8 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_boolean_value": set_boolean_value,
         "get_date_time_value": get_date_time_value,
         "set_date_time_value": set_date_time_value,
-        "get_blob_value": get_blob_value,
-        "set_blob_value": set_blob_value,
+        "get_binary_value": get_binary_value,
+        "set_binary_value": set_binary_value,
         "get_reference_value": get_reference_value,
         "set_reference_value": set_reference_value,
         "get_odma_class": get_odma_class,
