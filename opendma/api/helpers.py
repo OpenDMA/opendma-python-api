@@ -356,3 +356,17 @@ class OdmaServiceException(OdmaException):
         :param message: The error message describing the exception (default: "Backend service failed").
         """
         super().__init__(message)
+
+
+class OdmaAuthenticationException(OdmaException):
+    """
+    Exception raised when the provided credentials are invalid, authentication fails or the session has expired.
+    """
+
+    def __init__(self, message="Credentials are invalid, authentication has failed or the session has expired"):
+        """
+        Initialize the OdmaAuthenticationException with an error message.
+        
+        :param message: The error message describing the exception (default: "Credentials are invalid, authentication has failed or the session has expired").
+        """
+        super().__init__(message)
