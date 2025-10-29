@@ -152,6 +152,23 @@ PROPERTY_ROOTASPECTS = OdmaQName("opendma", "RootAspects")
 # qualified name of the OpenDMA system property RootFolder
 PROPERTY_ROOTFOLDER = OdmaQName("opendma", "RootFolder")
 
+# ----------< class AuditStamped >------------------------------------------------------------------
+
+# qualified name of the OpenDMA system class AuditStamped
+CLASS_AUDITSTAMPED = OdmaQName("opendma", "AuditStamped")
+
+# qualified name of the OpenDMA system property CreatedAt
+PROPERTY_CREATEDAT = OdmaQName("opendma", "CreatedAt")
+
+# qualified name of the OpenDMA system property CreatedBy
+PROPERTY_CREATEDBY = OdmaQName("opendma", "CreatedBy")
+
+# qualified name of the OpenDMA system property LastModifiedAt
+PROPERTY_LASTMODIFIEDAT = OdmaQName("opendma", "LastModifiedAt")
+
+# qualified name of the OpenDMA system property LastModifiedBy
+PROPERTY_LASTMODIFIEDBY = OdmaQName("opendma", "LastModifiedBy")
+
 # ----------< class Document >----------------------------------------------------------------------
 
 # qualified name of the OpenDMA system class Document
@@ -180,18 +197,6 @@ PROPERTY_COMBINEDCONTENTTYPE = OdmaQName("opendma", "CombinedContentType")
 
 # qualified name of the OpenDMA system property PrimaryContentElement
 PROPERTY_PRIMARYCONTENTELEMENT = OdmaQName("opendma", "PrimaryContentElement")
-
-# qualified name of the OpenDMA system property CreatedAt
-PROPERTY_CREATEDAT = OdmaQName("opendma", "CreatedAt")
-
-# qualified name of the OpenDMA system property CreatedBy
-PROPERTY_CREATEDBY = OdmaQName("opendma", "CreatedBy")
-
-# qualified name of the OpenDMA system property LastModifiedAt
-PROPERTY_LASTMODIFIEDAT = OdmaQName("opendma", "LastModifiedAt")
-
-# qualified name of the OpenDMA system property LastModifiedBy
-PROPERTY_LASTMODIFIEDBY = OdmaQName("opendma", "LastModifiedBy")
 
 # qualified name of the OpenDMA system property CheckedOut
 PROPERTY_CHECKEDOUT = OdmaQName("opendma", "CheckedOut")
@@ -265,14 +270,6 @@ PROPERTY_CONTAINEES = OdmaQName("opendma", "Containees")
 # qualified name of the OpenDMA system property Associations
 PROPERTY_ASSOCIATIONS = OdmaQName("opendma", "Associations")
 
-# Property CreatedAt already defined previously
-
-# Property CreatedBy already defined previously
-
-# Property LastModifiedAt already defined previously
-
-# Property LastModifiedBy already defined previously
-
 # ----------< class Folder >------------------------------------------------------------------------
 
 # qualified name of the OpenDMA system class Folder
@@ -307,11 +304,3 @@ PROPERTY_CONTAINER = OdmaQName("opendma", "Container")
 
 # qualified name of the OpenDMA system property Containable
 PROPERTY_CONTAINABLE = OdmaQName("opendma", "Containable")
-
-# Property CreatedAt already defined previously
-
-# Property CreatedBy already defined previously
-
-# Property LastModifiedAt already defined previously
-
-# Property LastModifiedBy already defined previously

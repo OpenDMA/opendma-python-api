@@ -17,6 +17,7 @@ TOdmaClass = TypeVar("TOdmaClass", bound="OdmaClass")
 TOdmaPropertyInfo = TypeVar("TOdmaPropertyInfo", bound="OdmaPropertyInfo")
 TOdmaChoiceValue = TypeVar("TOdmaChoiceValue", bound="OdmaChoiceValue")
 TOdmaRepository = TypeVar("TOdmaRepository", bound="OdmaRepository")
+TOdmaAuditStamped = TypeVar("TOdmaAuditStamped", bound="OdmaAuditStamped")
 TOdmaDocument = TypeVar("TOdmaDocument", bound="OdmaDocument")
 TOdmaContentElement = TypeVar("TOdmaContentElement", bound="OdmaContentElement")
 TOdmaDataContentElement = TypeVar("TOdmaDataContentElement", bound="OdmaDataContentElement")
@@ -1599,6 +1600,63 @@ class OdmaRepository(OdmaObject):
         """
         pass
 
+class OdmaAuditStamped(OdmaObject):
+    """
+    Objects with this aspect record information about their creation and their last modification.
+    """
+
+    @abstractmethod
+    def get_created_at(self) -> Optional[datetime]:
+        """
+        Returns the timestamp when this object has been created.<br>
+        Shortcut for <code>get_property(PROPERTY_CREATEDAT).get_datetime()</code>.
+        
+        Property opendma:CreatedAt: DateTime
+        [SingleValue] [ReadOnly] [Optional]
+        
+        :return: the timestamp when this object has been created
+        """
+        pass
+
+    @abstractmethod
+    def get_created_by(self) -> Optional[str]:
+        """
+        Returns the User who created this object.<br>
+        Shortcut for <code>get_property(PROPERTY_CREATEDBY).get_string()</code>.
+        
+        Property opendma:CreatedBy: String
+        [SingleValue] [ReadOnly] [Optional]
+        
+        :return: the User who created this object
+        """
+        pass
+
+    @abstractmethod
+    def get_last_modified_at(self) -> Optional[datetime]:
+        """
+        Returns the timestamp when this object has been modified the last time.<br>
+        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDAT).get_datetime()</code>.
+        
+        Property opendma:LastModifiedAt: DateTime
+        [SingleValue] [ReadOnly] [Optional]
+        
+        :return: the timestamp when this object has been modified the last time
+        """
+        pass
+
+    @abstractmethod
+    def get_last_modified_by(self) -> Optional[str]:
+        """
+        Returns the user who modified this object the last time.<br>
+        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDBY).get_string()</code>.
+        
+        Property opendma:LastModifiedBy: String
+        [SingleValue] [ReadOnly] [Optional]
+        
+        :return: the user who modified this object the last time
+        """
+        pass
+
 class OdmaDocument(OdmaObject):
     """
     A Document is the atomic element users work on in a content based environment. It can be compared to a file in a file system. Unlike files, it may consist of multiple octet streams. These content streams can for example contain images of the individual pages that make up the document. A Document is able to keep track of its changes (versioning) and manage the access to it (checkin and checkout).
@@ -1752,58 +1810,6 @@ class OdmaDocument(OdmaObject):
         
         :param new_value: the new value for the dedicated primary ContentElement. May only be null if ContentElements is empty.
         :raises OdmaAccessDeniedException: Raised if this OdmaProperty is read-only or cannot be set by the current user.
-        """
-        pass
-
-    @abstractmethod
-    def get_created_at(self) -> Optional[datetime]:
-        """
-        Returns the timestamp when this version of this document has been created.<br>
-        Shortcut for <code>get_property(PROPERTY_CREATEDAT).get_datetime()</code>.
-        
-        Property opendma:CreatedAt: DateTime
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the timestamp when this version of this document has been created
-        """
-        pass
-
-    @abstractmethod
-    def get_created_by(self) -> Optional[str]:
-        """
-        Returns the User who created this version of this document.<br>
-        Shortcut for <code>get_property(PROPERTY_CREATEDBY).get_string()</code>.
-        
-        Property opendma:CreatedBy: String
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the User who created this version of this document
-        """
-        pass
-
-    @abstractmethod
-    def get_last_modified_at(self) -> Optional[datetime]:
-        """
-        Returns the timestamp when this version of this document has been modified the last time.<br>
-        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDAT).get_datetime()</code>.
-        
-        Property opendma:LastModifiedAt: DateTime
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the timestamp when this version of this document has been modified the last time
-        """
-        pass
-
-    @abstractmethod
-    def get_last_modified_by(self) -> Optional[str]:
-        """
-        Returns the user who modified this version of this document the last time.<br>
-        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDBY).get_string()</code>.
-        
-        Property opendma:LastModifiedBy: String
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the user who modified this version of this document the last time
         """
         pass
 
@@ -2117,60 +2123,6 @@ class OdmaContainer(OdmaObject):
         """
         pass
 
-    @abstractmethod
-    def get_created_at(self) -> Optional[datetime]:
-        """
-        Returns the timestamp when this container has been created.<br>
-        Shortcut for <code>get_property(PROPERTY_CREATEDAT).get_datetime()</code>.
-        
-        Property opendma:CreatedAt: DateTime
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the timestamp when this container has been created
-        """
-        pass
-
-    @abstractmethod
-    def get_created_by(self) -> Optional[str]:
-        """
-        Returns the user who created this container.<br>
-        Shortcut for <code>get_property(PROPERTY_CREATEDBY).get_string()</code>.
-        
-        Property opendma:CreatedBy: String
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the user who created this container
-        """
-        pass
-
-    @abstractmethod
-    def get_last_modified_at(self) -> Optional[datetime]:
-        """
-        Returns the timestamp when this container has been modified the last time.<br>
-        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDAT).get_datetime()</code>.
-        
-        Property opendma:LastModifiedAt: DateTime
-        [SingleValue] [ReadOnly] [Optional]
-        There is no definition what counts as a modification. Some systems update this timestamp when objects are added or removed, other systems only update this timestamp when properties of this object get changed.
-        
-        :return: the timestamp when this container has been modified the last time
-        """
-        pass
-
-    @abstractmethod
-    def get_last_modified_by(self) -> Optional[str]:
-        """
-        Returns the user who modified this container the last time.<br>
-        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDBY).get_string()</code>.
-        
-        Property opendma:LastModifiedBy: String
-        [SingleValue] [ReadOnly] [Optional]
-        There is no definition what counts as a modification. Some systems update this timestamp when objects are added or removed, other systems only update this timestamp when properties of this object get changed.
-        
-        :return: the user who modified this container the last time
-        """
-        pass
-
 class OdmaFolder(OdmaContainer):
     """
     The Folder specific version of the OdmaContainer interface
@@ -2338,58 +2290,6 @@ class OdmaAssociation(OdmaObject):
         
         :param new_value: the new value for the destination of this directed link
         :raises OdmaAccessDeniedException: Raised if this OdmaProperty is read-only or cannot be set by the current user.
-        """
-        pass
-
-    @abstractmethod
-    def get_created_at(self) -> Optional[datetime]:
-        """
-        Returns the timestamp when this association has been created.<br>
-        Shortcut for <code>get_property(PROPERTY_CREATEDAT).get_datetime()</code>.
-        
-        Property opendma:CreatedAt: DateTime
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the timestamp when this association has been created
-        """
-        pass
-
-    @abstractmethod
-    def get_created_by(self) -> Optional[str]:
-        """
-        Returns the user who created this association.<br>
-        Shortcut for <code>get_property(PROPERTY_CREATEDBY).get_string()</code>.
-        
-        Property opendma:CreatedBy: String
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the user who created this association
-        """
-        pass
-
-    @abstractmethod
-    def get_last_modified_at(self) -> Optional[datetime]:
-        """
-        Returns the timestamp when this association has been modified the last time.<br>
-        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDAT).get_datetime()</code>.
-        
-        Property opendma:LastModifiedAt: DateTime
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the timestamp when this association has been modified the last time
-        """
-        pass
-
-    @abstractmethod
-    def get_last_modified_by(self) -> Optional[str]:
-        """
-        Returns the user who modified this association the last time.<br>
-        Shortcut for <code>get_property(PROPERTY_LASTMODIFIEDBY).get_string()</code>.
-        
-        Property opendma:LastModifiedBy: String
-        [SingleValue] [ReadOnly] [Optional]
-        
-        :return: the user who modified this association the last time
         """
         pass
 
@@ -3643,6 +3543,49 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_repository": get_repository,
     }
 
+    def get_created_at(self) -> Optional[datetime]:
+        try:
+            return core.get_property(constants.PROPERTY_CREATEDAT).get_datetime()
+        except OdmaPropertyNotFoundException:
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:CreatedAt")
+        except OdmaInvalidDataTypeException:
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:CreatedAt")
+
+    def get_created_by(self) -> Optional[str]:
+        try:
+            return core.get_property(constants.PROPERTY_CREATEDBY).get_string()
+        except OdmaPropertyNotFoundException:
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:CreatedBy")
+        except OdmaInvalidDataTypeException:
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:CreatedBy")
+
+    def get_last_modified_at(self) -> Optional[datetime]:
+        try:
+            return core.get_property(constants.PROPERTY_LASTMODIFIEDAT).get_datetime()
+        except OdmaPropertyNotFoundException:
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:LastModifiedAt")
+        except OdmaInvalidDataTypeException:
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:LastModifiedAt")
+
+    def get_last_modified_by(self) -> Optional[str]:
+        try:
+            return core.get_property(constants.PROPERTY_LASTMODIFIEDBY).get_string()
+        except OdmaPropertyNotFoundException:
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:LastModifiedBy")
+        except OdmaInvalidDataTypeException:
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:LastModifiedBy")
+
+    dict_odma_audit_stamped = {
+        "get_created_at": get_created_at,
+        "get_created_by": get_created_by,
+        "get_last_modified_at": get_last_modified_at,
+        "get_last_modified_by": get_last_modified_by,
+        "get_odma_class": get_odma_class,
+        "get_id": get_id,
+        "get_guid": get_guid,
+        "get_repository": get_repository,
+    }
+
     def get_title(self) -> Optional[str]:
         try:
             return core.get_property(constants.PROPERTY_TITLE).get_string()
@@ -3745,38 +3688,6 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:PrimaryContentElement")
 
-    def get_created_at(self) -> Optional[datetime]:
-        try:
-            return core.get_property(constants.PROPERTY_CREATEDAT).get_datetime()
-        except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:CreatedAt")
-        except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:CreatedAt")
-
-    def get_created_by(self) -> Optional[str]:
-        try:
-            return core.get_property(constants.PROPERTY_CREATEDBY).get_string()
-        except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:CreatedBy")
-        except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:CreatedBy")
-
-    def get_last_modified_at(self) -> Optional[datetime]:
-        try:
-            return core.get_property(constants.PROPERTY_LASTMODIFIEDAT).get_datetime()
-        except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:LastModifiedAt")
-        except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:LastModifiedAt")
-
-    def get_last_modified_by(self) -> Optional[str]:
-        try:
-            return core.get_property(constants.PROPERTY_LASTMODIFIEDBY).get_string()
-        except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:LastModifiedBy")
-        except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:LastModifiedBy")
-
     def get_checked_out(self) -> bool:
         try:
             result = core.get_property(constants.PROPERTY_CHECKEDOUT).get_boolean()
@@ -3817,10 +3728,6 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_combined_content_type": set_combined_content_type,
         "get_primary_content_element": get_primary_content_element,
         "set_primary_content_element": set_primary_content_element,
-        "get_created_at": get_created_at,
-        "get_created_by": get_created_by,
-        "get_last_modified_at": get_last_modified_at,
-        "get_last_modified_by": get_last_modified_by,
         "get_checked_out": get_checked_out,
         "get_checked_out_at": get_checked_out_at,
         "get_checked_out_by": get_checked_out_by,
@@ -4013,23 +3920,11 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Associations")
 
-    # Omit double definition of def get_created_at(self):
-
-    # Omit double definition of def get_created_by(self):
-
-    # Omit double definition of def get_last_modified_at(self):
-
-    # Omit double definition of def get_last_modified_by(self):
-
     dict_odma_container = {
         "get_title": get_title,
         "set_title": set_title,
         "get_containees": get_containees,
         "get_associations": get_associations,
-        "get_created_at": get_created_at,
-        "get_created_by": get_created_by,
-        "get_last_modified_at": get_last_modified_at,
-        "get_last_modified_by": get_last_modified_by,
         "get_odma_class": get_odma_class,
         "get_id": get_id,
         "get_guid": get_guid,
@@ -4068,10 +3963,6 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_title": set_title,
         "get_containees": get_containees,
         "get_associations": get_associations,
-        "get_created_at": get_created_at,
-        "get_created_by": get_created_by,
-        "get_last_modified_at": get_last_modified_at,
-        "get_last_modified_by": get_last_modified_by,
         "get_odma_class": get_odma_class,
         "get_id": get_id,
         "get_guid": get_guid,
@@ -4145,14 +4036,6 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Containable")
 
-    # Omit double definition of def get_created_at(self):
-
-    # Omit double definition of def get_created_by(self):
-
-    # Omit double definition of def get_last_modified_at(self):
-
-    # Omit double definition of def get_last_modified_by(self):
-
     dict_odma_association = {
         "get_name": get_name,
         "set_name": set_name,
@@ -4160,10 +4043,6 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_container": set_container,
         "get_containable": get_containable,
         "set_containable": set_containable,
-        "get_created_at": get_created_at,
-        "get_created_by": get_created_by,
-        "get_last_modified_at": get_last_modified_at,
-        "get_last_modified_by": get_last_modified_by,
         "get_odma_class": get_odma_class,
         "get_id": get_id,
         "get_guid": get_guid,
@@ -4188,6 +4067,9 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         elif intf == constants.CLASS_REPOSITORY:
             classes.append(OdmaRepository)
             dict.update(dict_odma_repository)
+        elif intf == constants.CLASS_AUDITSTAMPED:
+            classes.append(OdmaAuditStamped)
+            dict.update(dict_odma_audit_stamped)
         elif intf == constants.CLASS_DOCUMENT:
             classes.append(OdmaDocument)
             dict.update(dict_odma_document)
