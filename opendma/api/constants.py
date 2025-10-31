@@ -37,8 +37,8 @@ PROPERTY_DISPLAYNAME = OdmaQName("opendma", "DisplayName")
 # qualified name of the OpenDMA system property SuperClass
 PROPERTY_SUPERCLASS = OdmaQName("opendma", "SuperClass")
 
-# qualified name of the OpenDMA system property Aspects
-PROPERTY_ASPECTS = OdmaQName("opendma", "Aspects")
+# qualified name of the OpenDMA system property IncludedAspects
+PROPERTY_INCLUDEDASPECTS = OdmaQName("opendma", "IncludedAspects")
 
 # qualified name of the OpenDMA system property DeclaredProperties
 PROPERTY_DECLAREDPROPERTIES = OdmaQName("opendma", "DeclaredProperties")

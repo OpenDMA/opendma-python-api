@@ -699,16 +699,16 @@ class OdmaClass(OdmaObject):
         pass
 
     @abstractmethod
-    def get_aspects(self) -> Iterable[TOdmaClass]:
+    def get_included_aspects(self) -> Iterable[TOdmaClass]:
         """
-        Returns List of aspects that are implemented by this class.<br>
-        Shortcut for <code>get_property(PROPERTY_ASPECTS).get_reference_iterable()</code>.
+        Returns List of aspects that are included in this class.<br>
+        Shortcut for <code>get_property(PROPERTY_INCLUDEDASPECTS).get_reference_iterable()</code>.
         
-        Property opendma:Aspects: Reference to Class (opendma)
+        Property opendma:IncludedAspects: Reference to Class (opendma)
         [MultiValue] [Writable] [Optional]
         If this object describes an Aspect, i.e. the opendma:Aspect property is true, it cannot have any Aspects itself. For classes, this set contains all elements of the opendma:Aspects set of the super class. All opendma:PropertyInfo objects contained in the opendma:Properties set of any of the opendma:Class objects in this set are also part of the opendma:Properties set of this class.
         
-        :return: List of aspects that are implemented by this class
+        :return: List of aspects that are included in this class
         """
         pass
 
@@ -2996,21 +2996,21 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:SuperClass")
 
-    def get_aspects(self) -> Iterable[TOdmaClass]:
+    def get_included_aspects(self) -> Iterable[TOdmaClass]:
         try:
-            return core.get_property(constants.PROPERTY_ASPECTS).get_reference_iterable()
+            return core.get_property(constants.PROPERTY_INCLUDEDASPECTS).get_reference_iterable()
         except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:Aspects")
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:IncludedAspects")
         except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Aspects")
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:IncludedAspects")
 
-    def set_aspects(self, new_value: Iterable[TOdmaClass]) -> None:
+    def set_included_aspects(self, new_value: Iterable[TOdmaClass]) -> None:
         try:
-            core.get_property(constants.PROPERTY_ASPECTS).set_value(new_value)
+            core.get_property(constants.PROPERTY_INCLUDEDASPECTS).set_value(new_value)
         except OdmaPropertyNotFoundException:
-            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:Aspects")
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:IncludedAspects")
         except OdmaInvalidDataTypeException:
-            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Aspects")
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:IncludedAspects")
 
     def get_declared_properties(self) -> Iterable[TOdmaPropertyInfo]:
         try:
@@ -3123,8 +3123,8 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_display_name": get_display_name,
         "set_display_name": set_display_name,
         "get_super_class": get_super_class,
-        "get_aspects": get_aspects,
-        "set_aspects": set_aspects,
+        "get_included_aspects": get_included_aspects,
+        "set_included_aspects": set_included_aspects,
         "get_declared_properties": get_declared_properties,
         "set_declared_properties": set_declared_properties,
         "get_properties": get_properties,
