@@ -549,6 +549,20 @@ class OdmaObject(OdmaCoreObject):
         pass
 
     @abstractmethod
+    def get_aspects(self) -> Iterable[TOdmaClass]:
+        """
+        Returns References to valid aspect objects describing this object.<br>
+        Shortcut for <code>get_property(PROPERTY_ASPECTS).get_reference_iterable()</code>.
+        
+        Property opendma:Aspects: Reference to Class (opendma)
+        [MultiValue] [ReadOnly] [Optional]
+        The opendma:Aspects can augment the layout and features defined by opendma:Class for this object.
+        
+        :return: References to valid aspect objects describing this object
+        """
+        pass
+
+    @abstractmethod
     def get_id(self) -> OdmaId:
         """
         Returns the unique object identifier.<br>
@@ -2894,6 +2908,14 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         except OdmaInvalidDataTypeException:
             raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Class")
 
+    def get_aspects(self) -> Iterable[TOdmaClass]:
+        try:
+            return core.get_property(constants.PROPERTY_ASPECTS).get_reference_iterable()
+        except OdmaPropertyNotFoundException:
+            raise OdmaServiceException("Predefined OpenDMA property missing: opendma:Aspects")
+        except OdmaInvalidDataTypeException:
+            raise OdmaServiceException("Predefined OpenDMA property has wrong type or cardinality: opendma:Aspects")
+
     def get_id(self) -> OdmaId:
         try:
             result = core.get_property(constants.PROPERTY_ID).get_id()
@@ -2929,6 +2951,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
 
     dict_odma_object = {
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3138,6 +3161,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_sub_classes": get_sub_classes,
         "get_qname": lambda self: OdmaQName(self.get_namespace(), self.get_name()),
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3296,6 +3320,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_choices": set_choices,
         "get_qname": lambda self: OdmaQName(self.get_namespace(), self.get_name()),
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3489,6 +3514,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_reference_value": get_reference_value,
         "set_reference_value": set_reference_value,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3538,6 +3564,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_root_aspects": get_root_aspects,
         "get_root_folder": get_root_folder,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3581,6 +3608,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_last_modified_at": get_last_modified_at,
         "get_last_modified_by": get_last_modified_by,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3732,6 +3760,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_checked_out_at": get_checked_out_at,
         "get_checked_out_by": get_checked_out_by,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3766,6 +3795,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_content_type": set_content_type,
         "get_position": get_position,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3821,6 +3851,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_content_type": set_content_type,
         "get_position": get_position,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3849,6 +3880,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "set_content_type": set_content_type,
         "get_position": get_position,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3895,6 +3927,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_released": get_released,
         "get_in_progress": get_in_progress,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3926,6 +3959,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_containees": get_containees,
         "get_associations": get_associations,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3964,6 +3998,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_containees": get_containees,
         "get_associations": get_associations,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -3989,6 +4024,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_contained_in": get_contained_in,
         "get_contained_in_associations": get_contained_in_associations,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,
@@ -4044,6 +4080,7 @@ def odma_create_proxy(odma_interfaces: list[OdmaQName], core: OdmaCoreObject) ->
         "get_containable": get_containable,
         "set_containable": set_containable,
         "get_odma_class": get_odma_class,
+        "get_aspects": get_aspects,
         "get_id": get_id,
         "get_guid": get_guid,
         "get_repository": get_repository,

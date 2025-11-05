@@ -11,6 +11,9 @@ CLASS_OBJECT = OdmaQName("opendma", "Object")
 # qualified name of the OpenDMA system property Class
 PROPERTY_CLASS = OdmaQName("opendma", "Class")
 
+# qualified name of the OpenDMA system property Aspects
+PROPERTY_ASPECTS = OdmaQName("opendma", "Aspects")
+
 # qualified name of the OpenDMA system property Id
 PROPERTY_ID = OdmaQName("opendma", "Id")
 
